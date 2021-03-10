@@ -1,0 +1,13 @@
+{
+    "name": "assets/vendor",
+    "description": "Composer",
+    "authors": [
+        {
+            "name": "Victor",
+            "email": "12victorc@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.3"
+    }
+}

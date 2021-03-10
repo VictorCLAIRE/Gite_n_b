@@ -5,8 +5,6 @@ class database
     //COONEXION A LE BASE de DONNÉES
     //Stock des valeur nom utilistateur phpmyadmin et mot de passe
     public function getPDO(){
-    $user = "root";
-    $pass = "";
         //Essaie de te connecter
         try{
             //Stockage et instance de la classe PDO pour connecter php et mysql
@@ -16,7 +14,7 @@ class database
             return $db;
 
         }catch(PDOException $exception){
-            die("Erreur de connexion a PDO MySQL :" .$exception->getMessage());
+            die ("Erreur de connexion a PDO MySQL :" .$exception->getMessage());
         }
     }
 
