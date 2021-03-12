@@ -1,7 +1,5 @@
 <?php
 
-
-
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -23,8 +21,8 @@ class Reservation
         $emailClient=$_POST['Email_client'];
         $SujetClient=$_POST['Sujet'];
 
-//Instantiation and passing `true` enables exceptions
-$mail = new PHPMailer(true);
+    //Instantiation and passing `true` enables exceptions
+    $mail = new PHPMailer(true);
 
 try {
     //Server settings
@@ -112,10 +110,3 @@ try {
 
     }
 }
-
-
-
-$content=ob_get_clean();
-//Rappel du template sur chaque page
-require "views/template.php";
-?>

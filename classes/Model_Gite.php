@@ -10,10 +10,10 @@ class ModelGite extends database{
 
         foreach($req as $row){
             ?>
-            <div class="col-4 mt-2">
+            <div class="col-3 mt-2">
                 <!-- CARD -->
-                <div class="card text-center">
-                    <img class="d-block user-select-none" width="100%" height="250" src="<?php echo $row['photo_logement'] ?>" alt="Card image cap">
+                <div class="card text-center cardAccueil">
+                    <img class="d-block user-select-none imgCardAccueil" src="<?php echo $row['photo_logement'] ?>" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="c"><?php echo $row['intitule_logement'] ?></h5>
                     </div>
@@ -22,13 +22,13 @@ class ModelGite extends database{
                         <li class="list-group-item">Situé :<?php echo $row['emplacement_logement'] ?></li>
                         <li class="list-group-item"><?php echo $row['prix_logement'] ?>€/nuit</li>
                         <li class="list-group-item"><a class="btn btn-info" href="LogementDetails.php?ID=<?=$row["id_logement"]?>">Détails</a></li>
-
                     </ul>
                 </div>
             </div>
             <?php
         }
     }
+
     public function ShowLogementAdmin(){
 
         $db = $this->getPDO();
@@ -110,6 +110,7 @@ class ModelGite extends database{
 
             <?php
         }
+
     public function ShowLogementByIdReservation(){
 
         $db = $this->getPDO();
@@ -121,62 +122,54 @@ class ModelGite extends database{
         $res=$req->fetch();
         ?>
         <!-- CARD -->
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <div class=" ">
-            <div class="">
-                <div class="">
-                    <img class="" src="<?php echo $res['photo_logement'] ?>" alt="Card image cap">
-                    <div class="">
+        <div class="row container-fluid m-2">
+            <div class="col-4 text-center">
+                <div class="card">
+                    <div class="card-body">
                         <h5 class=""><?php echo $res['intitule_logement'] ?></h5>
                     </div>
-                    <div>
-                        <ul class="">
-                            <li class="">iD logement: <?php echo $res['id_logement'] ?></li>
-                            <li class=""><?php echo $res['prix_logement'] ?>€/nuit</li>
-                        </ul>
-                    </div>
-                    <a href="index.php">Retour accueil</a>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><img class="" width="250" height="250" src="<?php echo $res['photo_logement'] ?>" alt="Card image cap"></li>
+                    </ul>
                 </div>
             </div>
+            <div class="col-8 text-center formulaireResa">
+                <form class="cm-2" method="post" >
+                    <div class="form-row">
+                         <div class="col form-group">
+                             <label for="nom">Nom</label>
+                             <input class="form-control" type="text" id="Nom_client" name="Nom_client">
+                         </div>
+                         <div class="col form-group">
+                             <label for="prenom">Prénom</label>
+                             <input class="form-control" type="text" id="Prenom_client" name="Prenom_client">
+                         </div>
+
+                         <div class="col form-group">
+                             <label for="arrivee">Date d'arrivée</label>
+                             <input class="form-control" type="date" id="Arrivee_client" name="Arrivee_client">
+                         </div>
+                         <div class="col form-group">
+                             <label for="sortie">Date de sortie</label>
+                             <input class="form-control" type="date" id="Sortie_client" name="Sortie_client">
+                         </div>
+                    </div>
+                     <div class="form-group">
+                         <label for="email">email</label>
+                         <input class="form-control" type="email" id="Email_client" name="Email_client">
+                     </div>
+                     <div class="form-group">
+                         <label for="Message">Message(facultatif)</label>
+                         <textarea class="form-control" id="Message_client" name="Message_client"></textarea>
+                     </div>
+                     <div class="form-group">
+                         <input class="form-control" type="hidden" value="<?php echo $res['intitule_logement'] ?>" name="Sujet">
+                     </div>
+                     <button class="btn btn-primary btn-lg btn-block" type="submit" value="Reserver" name="validReservation" >Réserver</button>
+                 </form>
+             </div>
         </div>
-         <div class="col-8 ">
-             <form class="" method="post" >
-                 <h2> Formulaire de réservation. Merci de remplir tous les champs</h2>
-                 <div>
-                     <label for="nom">Nom</label>
-                     <input type="text" id="Nom_client" name="Nom_client">
-                 </div>
-                 <div>
-                     <label for="prenom">Prénom</label>
-                     <input type="text" id="Prenom_client" name="Prenom_client">
-                 </div>
-                 <div>
-                     <label for="arrivee">Date d'arrivée</label>
-                     <input type="date" id="Arrivee_client" name="Arrivee_client">
-                 </div>
-                 <div>
-                     <label for="sortie">Date de sortie</label>
-                     <input type="date" id="Sortie_client" name="Sortie_client">
-                 </div>
-                 <div>
-                     <label for="email">email</label>
-                     <input type="email" id="Email_client" name="Email_client">
-                 </div>
-                 <div>
-                     <label for="Message">Message(facultatif)</label>
-                     <textarea id="Message_client" name="Message_client"></textarea>
-                 </div>
-                 <div>
-                     <input type="hidden" value="<?php echo $res['intitule_logement'] ?>" name="Sujet">
-                 </div>
-                 <button type="submit" value="Reserver" name="validReservation" >Réserver</button>
-             </form>
-         </div>
+
         <?php
     }
 
@@ -210,7 +203,7 @@ class ModelGite extends database{
                     <li class="list-group-item">Option du logement :<?php echo $res['choix_option_logement'] ?></li>
                     <li class="list-group-item"><?php echo $res['prix_logement'] ?>€/nuit</li>
             </div>
-            <a class="btn btn-success btn-lg btn-block m-2" href="ForumlaireReservationGite?ID=<?=$res["id_logement"]?>">Réserver ce gite</a>
+            <a class="btn btn-success btn-lg btn-block m-2" href="FormulaireReservationGite?ID=<?=$res["id_logement"]?>">Réserver ce gite</a>
             <a class="btn btn-danger " href="index.php">Retour accueil</a>
         </div>
         <?php
@@ -220,39 +213,39 @@ class ModelGite extends database{
 
         $db = $this->getPDO();
         $DateArrivee=$_POST['search_arrivee'];
-        $DateArrivee=$_POST['search_sortie'];
+        $Datedepart=$_POST['search_depart'];
         $TypeChambre=$_POST['search_type_logement'];
         $NmbreChambre=$_POST['search_chambre'];
 
-        $req = $db->query("SELECT * FROM logement WHERE `chambre_logement` = {$NmbreChambre}");
+        $req = $db->prepare("SELECT * FROM logement WHERE id_logement NOT IN (SELECT id_gite_booking FROM clef_booking_logement 
+                                                            WHERE date_arrivee_booking BETWEEN ? AND ?
+                                                            OR date_depart_booking BETWEEN ? AND ?)                                                            
+                                    ");
+        //$req->bindParam(1,$NmbreChambre );
+        $req->bindParam(1,$DateArrivee);
+        $req->bindParam(2,$Datedepart);
+        $req->bindParam(3,$DateArrivee);
+        $req->bindParam(4,$Datedepart);
+        $req->execute();
+        $rows=$req->fetchAll();
 
-        foreach($req as $row){
+        foreach($rows as $row){
         ?>
-        <div class="">
-            <div class="">
-                <div class="">
-                    <img class="" src="<?php echo $row['photo_logement'] ?>" alt="Card image cap">
-                    <div class="">
-                        <h5 class=""><?php echo $row['intitule_logement'] ?></h5>
+            <div class="col-3 mt-2">
+                <!-- CARD -->
+                <div class="card text-center cardAccueil">
+                    <img class="d-block user-select-none imgCardAccueil" src="<?php echo $row['photo_logement'] ?>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="c"><?php echo $row['intitule_logement'] ?></h5>
                     </div>
-                    <div>
-                        <ul class="">
-                            <li class="">Nombre de chambre : <?php echo $row['chambre_logement'] ?></li>
-                            <li class="">Situé :<?php echo $row['emplacement_logement'] ?></li>
-                            <li class="">Option du logement :<?php echo $row['option_logement'] ?></li>
-                            <li class=""><?php echo $row['prix_logement'] ?>€/nuit</li>
-                        </ul>
-                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Nombre de chambre : <?php echo $row['chambre_logement'] ?></li>
+                        <li class="list-group-item">Situé :<?php echo $row['emplacement_logement'] ?></li>
+                        <li class="list-group-item"><?php echo $row['prix_logement'] ?>€/nuit</li>
+                        <li class="list-group-item"><a class="btn btn-info" href="LogementDetails.php?ID=<?=$row["id_logement"]?>">Détails</a></li>
+                    </ul>
                 </div>
-                <a href="LogementDetails.php?ID=<?=$row["id_logement"]?>">
-                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="portfolio-item-caption-content text-center text-white">
-                            <i class="fas fa-plus fa-3x"></i>
-                        </div>
-                    </div>
-                </a>
             </div>
-        </div>
 
         <?php
     }
@@ -343,6 +336,7 @@ class ModelGite extends database{
         }
 
     }
+
     public function SearchGite(){
         $db = $this->getPDO();
         $req = $db->query("SELECT * FROM logement INNER JOIN clef_type_logement ON logement.type_logement = clef_type_logement.id_type_logement  ");
@@ -355,8 +349,8 @@ class ModelGite extends database{
                         <input class="form-control" type="date" id="search_arrivee" name="search_arrivee">
                     </div>
                     <div class="col text-center">
-                        <label for="type">Date de sortie</label>
-                        <input class="form-control" type="date" id="search_sortie" name="search_sortie">
+                        <label for="type">Date de départ</label>
+                        <input class="form-control" type="date" id="search_depart" name="search_depart">
                     </div>
 
                     <div class="col text-center">
@@ -387,11 +381,14 @@ class ModelGite extends database{
                             <option value="5">5</option>
                             <option value="6">6</option>
                             <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
                         </select>
                     </div>
                 </div>
                 <div class="text-center">
-                    <button class="btn btn-primary" type="submit">Rechercher</button>
+                    <button class="btn btn-dark m-2" type="submit">Rechercher</button>
                 </div>
             </form>
         </div>
@@ -433,6 +430,7 @@ class ModelGite extends database{
             <?php
         }
     }
+
     public function UploadImg(){
 
     //Gestion upload image
@@ -453,4 +451,28 @@ class ModelGite extends database{
     }
     }
 
+    public function ShowAllBooking(){
+
+        $db = $this->getPDO();
+        $req = $db->query("SELECT * FROM `clef_booking_logement` INNER JOIN logement ON clef_booking_logement.id_gite_booking = logement.id_logement ORDER BY `id_booking` DESC");
+
+        foreach($req as $row){
+            ?>
+            <div class="row">
+                <div class="col-3 text-center">
+                    <?php echo $row['id_booking'] ?>
+                </div>
+                <div class="col-3 text-center">
+                    <?php echo $row['intitule_logement'] ?>
+                </div>
+                <div class="col-3 text-center">
+                    <?php echo $row['date_arrivee_booking'] ?>
+                </div>
+                <div class="col-3 text-center">
+                    <?php echo $row['date_depart_booking'] ?>
+                </div>
+            </div>
+            <?php
+        }
+    }
 }

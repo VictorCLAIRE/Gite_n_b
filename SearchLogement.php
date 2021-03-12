@@ -7,11 +7,7 @@ $gite= new ModelGite();
 
 ?>
 <div class="container-fluid text-center">
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+
     <div class="container-fluid text-center">
 
             <?php

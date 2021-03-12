@@ -6,34 +6,28 @@ $gite = new ModelGite();
 require "Reservation.php";
 $emailValidation = new Reservation();
 
-
-
 $db = $gite->getPDO();
 $ID = $_GET['ID'];
 ?>
-<br>
-    <br>
-    <br>
-    <br>
-    <br>
     <h1 class="text-center">
         RESERVATION
     </h1>
-<div class="row">
+
+
 <?php
 $gite->ShowLogementByIdReservation();
 ?>
-</div>
+
+    <a class="btn btn-secondary m-1 text-center btn-lg btn-block" href="index.php">Retour accueil</a>
+
 <?php
     if (isset($_POST['validReservation'])) {
     $emailValidation->reserverGite();
-    echo "<h3 class='alert-success p-3 text-danger'>Un email viens de vous etre envoyé, merci de verifié votre boite mail pour confirmer votre resevation</h3>";
+    echo "<h3 class='alert-success p-3 text-danger'>Un email vient de vous être envoyé, merci de verifié votre boite mail pour confirmer votre resevation</h3>";
     } else {
-    echo "<p class='alert-warning p-3'>Merci de remplir le formulaire avec votre email</p>";
+    echo "";
     }
 ?>
-
-
 
 <?php
 $content=ob_get_clean();
