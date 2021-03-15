@@ -224,7 +224,7 @@ class ModelGite extends database{
         $NmbreChambre=$_POST['search_chambre'];
 
         $req = $db->prepare("SELECT * FROM logement WHERE chambre_logement = ?
-                                                            AND id_logement IN (SELECT id_gite_booking FROM clef_booking_logement WHERE date_arrivee_booking <= ? AND date_depart_booking >= ?)
+                                                            AND id_logement NOT IN (SELECT id_gite_booking FROM clef_booking_logement WHERE date_arrivee_booking <= ? AND date_depart_booking >= ?)
                                                          
                                     ");
         $req->bindParam(1,$NmbreChambre );
@@ -253,7 +253,7 @@ class ModelGite extends database{
             </div>
 
         <?php
-    }
+        }
     }
 
     public function addGite (){
