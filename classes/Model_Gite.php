@@ -14,8 +14,8 @@ class ModelGite extends database{
                 <!-- CARD -->
                 <div class="card text-center cardAccueil">
                     <img class="d-block user-select-none imgCardAccueil" src="<?php echo $row['photo_logement'] ?>" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="c"><?php echo $row['intitule_logement'] ?></h5>
+                    <div class="card-body CaseIntitule">
+                        <h5 class=""><?php echo $row['intitule_logement'] ?></h5>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Nombre de chambre : <?php echo $row['chambre_logement'] ?></li>
@@ -35,6 +35,7 @@ class ModelGite extends database{
         $req = $db->query("SELECT * FROM logement INNER JOIN clef_type_logement ON logement.type_logement = clef_type_logement.id_type_logement 
                                                             INNER JOIN clef_dispo_logement ON logement.dispo_logement = clef_dispo_logement.id_dispo_logement
                                                             INNER JOIN clef_option_logement ON logement.option_logement = clef_option_logement.id_option_logement
+                                                            INNER JOIN clef_departement_logement ON logement.departement_logement = clef_departement_logement.id_departement_logement
                                                             ORDER BY `id_logement` DESC");
         foreach($req as $row){
             ?>
@@ -51,6 +52,7 @@ class ModelGite extends database{
                             <li class="list-group-item">Description: <?php echo $row['description_logement'] ?></li>
                             <li class="list-group-item">Etat: <?php echo $row['choix_dispo_logement'] ?></li>
                             <li class="list-group-item">Situé :<?php echo $row['emplacement_logement'] ?></li>
+                            <li class="list-group-item">Département :<?php echo $row['nom_departement_logement'] ?></li>
                             <li class="list-group-item">Nombre de chambre : <?php echo $row['chambre_logement'] ?></li>
                             <li class="list-group-item">Nombre de salle de bain: <?php echo $row['sdb_logement'] ?></li>
                             <li class="list-group-item">Option du logement :<?php echo $row['choix_option_logement'] ?></li>
@@ -70,6 +72,7 @@ class ModelGite extends database{
         $req = $db->prepare("SELECT * FROM logement INNER JOIN clef_type_logement ON logement.type_logement = clef_type_logement.id_type_logement 
                                                             INNER JOIN clef_dispo_logement ON logement.dispo_logement = clef_dispo_logement.id_dispo_logement
                                                             INNER JOIN clef_option_logement ON logement.option_logement = clef_option_logement.id_option_logement
+                                                            INNER JOIN clef_departement_logement ON logement.departement_logement = clef_departement_logement.id_departement_logement
                                                             WHERE id_logement = ?  ");
         $ID=$_GET['ID_suppr'];
         $req->bindParam(1, $ID);
@@ -90,6 +93,7 @@ class ModelGite extends database{
                             <li class="list-group-item">Description: <?php echo $res['description_logement'] ?></li>
                             <li class="list-group-item">Etat: <?php echo $res['choix_dispo_logement'] ?></li>
                             <li class="list-group-item">Situé :<?php echo $res['emplacement_logement'] ?></li>
+                            <li class="list-group-item">Département :<?php echo $res['nom_departement_logement'] ?></li>
                             <li class="list-group-item">Nombre de chambre : <?php echo $res['chambre_logement'] ?></li>
                             <li class="list-group-item">Nombre de salle de bain: <?php echo $res['sdb_logement'] ?></li>
                             <li class="list-group-item">Option du logement :<?php echo $res['choix_option_logement'] ?></li>
@@ -179,6 +183,7 @@ class ModelGite extends database{
         $req = $db->prepare("SELECT * FROM logement INNER JOIN clef_type_logement ON logement.type_logement = clef_type_logement.id_type_logement 
                                                             INNER JOIN clef_dispo_logement ON logement.dispo_logement = clef_dispo_logement.id_dispo_logement
                                                             INNER JOIN clef_option_logement ON logement.option_logement = clef_option_logement.id_option_logement
+                                                            INNER JOIN clef_departement_logement ON logement.departement_logement = clef_departement_logement.id_departement_logement
                                                             WHERE id_logement = ?  ");
         $ID=$_GET['ID'];
         $req->bindParam(1, $ID);
@@ -198,6 +203,7 @@ class ModelGite extends database{
                     <li class="list-group-item">Description: <?php echo $res['description_logement'] ?></li>
                     <li class="list-group-item">Etat: <?php echo $res['choix_dispo_logement'] ?></li>
                     <li class="list-group-item">Situé :<?php echo $res['emplacement_logement'] ?></li>
+                    <li class="list-group-item">Département :<?php echo $res['nom_departement_logement'] ?></li>
                     <li class="list-group-item">Nombre de chambre : <?php echo $res['chambre_logement'] ?></li>
                     <li class="list-group-item">Nombre de salle de bain: <?php echo $res['sdb_logement'] ?></li>
                     <li class="list-group-item">Option du logement :<?php echo $res['choix_option_logement'] ?></li>
@@ -217,15 +223,14 @@ class ModelGite extends database{
         $TypeChambre=$_POST['search_type_logement'];
         $NmbreChambre=$_POST['search_chambre'];
 
-        $req = $db->prepare("SELECT * FROM logement WHERE id_logement NOT IN (SELECT id_gite_booking FROM clef_booking_logement 
-                                                            WHERE date_arrivee_booking BETWEEN ? AND ?
-                                                            OR date_depart_booking BETWEEN ? AND ?)                                                            
+        $req = $db->prepare("SELECT * FROM logement WHERE chambre_logement = ?
+                                                            AND id_logement IN (SELECT id_gite_booking FROM clef_booking_logement WHERE date_arrivee_booking <= ? AND date_depart_booking >= ?)
+                                                         
                                     ");
-        //$req->bindParam(1,$NmbreChambre );
-        $req->bindParam(1,$DateArrivee);
+        $req->bindParam(1,$NmbreChambre );
         $req->bindParam(2,$Datedepart);
         $req->bindParam(3,$DateArrivee);
-        $req->bindParam(4,$Datedepart);
+
         $req->execute();
         $rows=$req->fetchAll();
 
@@ -265,11 +270,10 @@ class ModelGite extends database{
         $emplacement_logement = $_POST['emplacement_logement'];
         $etat_logement = $_POST['etat_logement'];
         $option_logement = $_POST['option_logement'];
-
-
+        $departement_logement = $_POST['departement_logement'];
 
         
-        $reqCreate ="INSERT INTO logement (type_logement, intitule_logement, description_logement, photo_logement, chambre_logement, sdb_logement, prix_logement, emplacement_logement, dispo_logement, option_logement) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        $reqCreate ="INSERT INTO logement (type_logement, intitule_logement, description_logement, photo_logement, chambre_logement, sdb_logement, prix_logement, emplacement_logement, dispo_logement, option_logement,departement_logement) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $requete_insertion = $db->prepare($reqCreate);
 
@@ -283,9 +287,10 @@ class ModelGite extends database{
         $requete_insertion->bindParam(8, $emplacement_logement);
         $requete_insertion->bindParam(9, $etat_logement);
         $requete_insertion->bindParam(10, $option_logement);
+        $requete_insertion->bindParam(10, $departement_logement);
 
 
-        $requete_insertion->execute(array($type_logement, $intitule_logement, $description_logement, $photo_logement,$chambre_logement, $sdb_logement, $prix_logement, $emplacement_logement, $etat_logement, $option_logement));
+        $requete_insertion->execute(array($type_logement, $intitule_logement, $description_logement, $photo_logement,$chambre_logement, $sdb_logement, $prix_logement, $emplacement_logement, $etat_logement, $option_logement, $departement_logement));
 
         if($requete_insertion){
             echo "C cool";
@@ -308,13 +313,15 @@ class ModelGite extends database{
         $prix_logement = $_POST['prix_logement'];
         $emplacement_logement = $_POST['emplacement_logement'];
         $dispo_logement = $_POST['dispo_logement'];
+        $departement_logement= $_POST['departement_logement'];
         $ID = $_GET['ID'];
 
-        $reqUpdate= $db->prepare("UPDATE `logement` SET `type_logement`= '$type_logement',`intitule_logement`= '$intitule_logement',`description_logement`= '$description_logement',`photo_logement`= '$photo_logement',`chambre_logement`= '$chambre_logement',`sdb_logement`= '$sdb_logement',`prix_logement`= '$prix_logement',`emplacement_logement`= '$emplacement_logement',`dispo_logement`= '$dispo_logement' WHERE `id_logement` = ?");
+        $reqUpdate= $db->prepare("UPDATE `logement` SET `type_logement`= '$type_logement',`intitule_logement`= '$intitule_logement',`description_logement`= '$description_logement',`photo_logement`= '$photo_logement',`chambre_logement`= '$chambre_logement',`sdb_logement`= '$sdb_logement',`prix_logement`= '$prix_logement',`emplacement_logement`= '$emplacement_logement',`dispo_logement`= '$dispo_logement',`departement_logement`= '$departement_logement' WHERE `id_logement` = ?");
         $requete_insertion=$reqUpdate->execute(array($ID));
 
         if($requete_insertion){
-            header("location:http://localhost/Projet_5_Gite_new/admin.php");
+            var_dump($departement_logement);
+            //header("location:http://localhost/Projet_5_Gite_new/admin.php");
         }else{
             echo " remplir les champs";
         }
@@ -419,6 +426,18 @@ class ModelGite extends database{
         }
     }
 
+    public function LectureDepartementLogement(){
+
+        $db = $this->getPDO();
+        $req = $db->query("SELECT * FROM clef_departement_logement ");
+
+        foreach($req as $row){
+            ?>
+            <option value="<?= $row['id_departement_logement']?>"><?= $row['nom_departement_logement']?></option>
+            <?php
+        }
+    }
+
     public function LectureTypeLogement(){
 
         $db = $this->getPDO();
@@ -438,7 +457,6 @@ class ModelGite extends database{
     $target_dir = 'assets/img/';
     $img_gite = $target_dir . basename($_FILES['photo_logement']['name']);
     $_POST['photo_logement'] = $img_gite;
-    var_dump($img_gite);
 
         if(move_uploaded_file($_FILES['photo_logement']['tmp_name'], $img_gite)){
 

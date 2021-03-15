@@ -23,9 +23,19 @@ $gite = new ModelGite();
                     <label for="description">Descrpition du logement</label>
                     <textarea class="form-control" required type="text" id="description_logement" name="description_logement" ><?= $res['description_logement']?></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="emplacement">Emplacement du logement</label>
-                    <input value="<?= $res['emplacement_logement']?>" class="form-control" required type="text" id="emplacement_logement" name="emplacement_logement"  >
+                <div class="form-row m-2">
+                    <div class="col">
+                        <label for="emplacement">Emplacement du logement</label>
+                        <input value="<?= $res['emplacement_logement']?>" class="form-control" required type="text" id="emplacement_logement" name="emplacement_logement"  >
+                    </div>
+                    <div class="col">
+                        <label for="emplacement">Département du logement</label>
+                        <select class="form-control" required type="text" id="departement_logement" name="departement_logement">
+                            <?php
+                            $gite->LectureDepartementLogement();
+                            ?>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-row m-2">
                     <div class="col">
@@ -81,7 +91,6 @@ $gite = new ModelGite();
 
     <?php
     if(isset($_POST['Modifier'])){
-        echo "ok click Modif";
         $gite->UploadImg();
         $gite->UpdateGite();
     }

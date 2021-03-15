@@ -43,6 +43,14 @@ $gite = new ModelGite();
                     <input class="form-control" required type="text" id="emplacement_logement" name="emplacement_logement"  >
                 </div>
                 <div class="form-group">
+                    <label for="etat">Département du logement :</label>
+                    <select  class="form-control" required type="text" id="departement_logement" name="departement_logement">
+                        <?php
+                        $gite->LectureDepartementLogement();
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="etat">Etat du logement :</label>
                     <select  class="form-control" required type="text" id="etat_logement" name="etat_logement">
                         <?php
