@@ -19,15 +19,22 @@ session_start();
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <a class="navbar-brand" href="index.php">Gîte'n'b</a>
                 <div class="justify-content-end">
+
                     <?php
-                    if (isset($_SESSION['connecter']) && $_SESSION['connecter'] == true){
+                    if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true){
                     ?>
                         <ul class="navbar-nav">
                             <li class="nav-item active"><a class="nav-link" href="admin.php">Gestion des gites</a></li>
                             <li class="nav-item active"><a class="nav-link" href="booking.php">All booking des gites</a></li>
-                            <li class="nav-item active nav-link"><?=$_SESSION['email_admin_logement']?></a></li>
+                            <li class="nav-item active nav-link">ADMIN : <?=$_SESSION['email_admin_logement']?></a></li>
                             <li class="nav-item active"><a class="nav-link" href="deconnexion.php">Déconnexion</a></li>
-
+                        </ul>
+                    <?php
+                    }elseif (isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] == true){
+                    ?>
+                        <ul class="navbar-nav">
+                            <li class="nav-item active nav-link">USER : <?=$_SESSION['email_user']?></a></li>
+                            <li class="nav-item active"><a class="nav-link" href="deconnexion.php">Déconnexion</a></li>
                         </ul>
                     <?php
                     }else{

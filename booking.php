@@ -6,6 +6,9 @@ require "classes/Model_Gite.php";
 $gite= new ModelGite();
 ?>
     <h2 class="text-center m-2"> Tableau des booking</h2>
+<?php
+
+?>
     <div class="row m-2">
         <div class="col-3 text-center">
             <h4>id_booking</h4>

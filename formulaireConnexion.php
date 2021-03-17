@@ -2,8 +2,26 @@
 ob_start();
 require "classes/Connexion.php";
 $Connexion = new Connexion ();
+?>
+    <h2 class="text-center"> Formulaires de connexion</h2>
+<div class="row">
+    <div class="col-6">
+        <?php
+        $Connexion->FormulaireVerificationAdmin();
+        ?>
+    </div>
+    <div class="col-6">
+        <?php
+        $Connexion->FormulaireVerificationUser();
+        ?>
+    </div>
+</div>
+<?php
 
-$Connexion->FormulaireVerificationAdmin();
+
+
+
+
 
 
 $content=ob_get_clean();
