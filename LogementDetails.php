@@ -1,4 +1,5 @@
 <?php
+session_start();
 //session_start();
 ob_start();
 $title="Détails du logement";
@@ -8,7 +9,6 @@ $gite = new ModelGite();
 
 $db = $gite->getPDO();
 $ID = $_GET['ID'];
-
 
 
 $gite->ShowLogementByIdDetails();

@@ -1,4 +1,5 @@
 <?php
+session_start();
 ob_start();
 $title="Formulaire de réservation";
 require "classes/Model_Gite.php";
@@ -12,7 +13,6 @@ $ID = $_GET['ID'];
     <h1 class="text-center">
         RESERVATION
     </h1>
-
 
 <?php
 $gite->ShowLogementByIdReservation();

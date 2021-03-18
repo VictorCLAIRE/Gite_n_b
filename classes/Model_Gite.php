@@ -255,20 +255,23 @@ class ModelGite extends database{
             </div>
             <div class="text-center ">
                 <a class="btn btn-success btn-lg btn-block m-2" href="FormulaireReservationGite?ID=<?=$res["id_logement"]?>">Réserver ce gite</a>
-                <a class="btn btn-danger" href="index.php">Retour accueil</a>
+                <div>
+                    <a class="btn btn-danger" href="index.php">Retour accueil</a>
+                    <?php
+                    if (isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] === true) {
+                        ?>
+                        <a class="btn btn-warning" href="AjoutCommentaire.php?ID=<?=$ID?>">Ajouter un commentaire</a>
+                        <?php
+                    }else{
+                        ?>
+                        <p></p>
+                        <?php
+                    }
+                    ?>
+                </div>
+
             </div>
 
-            <?php
-            if (isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] === true) {
-            ?>
-            <a class="btn btn-waning" href="AjoutCommentaire.php?ID=<?=$ID?>">Ajouter un commentaire</a>
-            <?php
-            }else{
-            ?>
-            <p>ELELELELELSSSE</p>
-            <?php
-            }
-            ?>
 
 
         </div>
@@ -344,97 +347,57 @@ class ModelGite extends database{
     public function FormulaireCommentaireById(){
 
         $db = $this->getPDO();
-        $req = $db->prepare("SELECT * FROM logement INNER JOIN clef_type_logement ON logement.type_logement = clef_type_logement.id_type_logement 
-                                                            INNER JOIN clef_dispo_logement ON logement.dispo_logement = clef_dispo_logement.id_dispo_logement
-                                                            INNER JOIN clef_option_logement ON logement.option_logement = clef_option_logement.id_option_logement
-                                                            INNER JOIN clef_departement_logement ON logement.departement_logement = clef_departement_logement.id_departement_logement
-                                                            WHERE id_logement = ?  ");
+        $req = $db->prepare("SELECT * FROM logement WHERE id_logement = ?  ");
         $ID=$_GET['ID'];
         $req->bindParam(1, $ID);
         $req->execute();
         $res=$req->fetch();
         ?>
 
-        <!-- CARD -->
-
         <div class="mt-2">
-            <div class="divLogementById">
-                <h2 class="text-center"><?php echo $res['intitule_logement'] ?></h2>
-                <div class="row">
-                    <div class="col-4 text-center">
-                        <div class="divLogementByIdImg">
-                            <img class="" width="300" height="300" src="<?php echo $res['photo_logement'] ?>" alt="Card image cap">
+            <div class="row container-fluid m-2">
+                <div class="col-4 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class=""><?php echo $res['intitule_logement'] ?></h5>
                         </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="divLogementByIdDescription">
-                            <h6>Description:</h6>
-                            <p> <?php echo $res['description_logement'] ?></p>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="divLogementByIdInfo">
-                                    <h6> type de logement :</h6>
-                                    <p> <?php echo $res['choix_type_logement'] ?></p>
-                                </div>
-                                <div class="divLogementByIdInfo">
-                                    <h6>Localisation :</h6>
-                                    <p><?php echo $res['emplacement_logement'] ?></p>
-                                </div>
-
-                            </div>
-                            <div class="col-4">
-                                <div class="divLogementByIdInfo">
-                                    <h6>Option du logement :</h6>
-                                    <p><?php echo $res['choix_option_logement'] ?></p>
-                                </div>
-                                <div class="divLogementByIdInfo">
-                                    <h6>Département :</h6>
-                                    <p><?php echo $res['nom_departement_logement'] ?></p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="divLogementByIdInfo">
-                                    <h6>Nombre de chambre :</h6>
-                                    <p> <?php echo $res['chambre_logement'] ?></p>
-                                </div>
-                                <div class="divLogementByIdInfo">
-                                    <h6>Nombre de salle de bain:</h6>
-                                    <p> <?php echo $res['sdb_logement'] ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="divLogementByIdTarif">
-                            <h6>Tarif :</h6>
-                            <p><?php echo $res['prix_logement'] ?>€/nuit</p>
-                        </div>
-
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><img class="" width="250" height="250" src="<?php echo $res['photo_logement'] ?>" alt="Card image cap"></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="row m-2">
-                    <?php
-                    $this->ShowCommentaryById();
-                    ?>
+                <div class="col-8 text-center formulaireResa">
+                    <form class="cm-2" action="SaveCommentaire.php?ID=<?=$ID?>" method="post" >
+                        <div class="form-row">
+                            <div class="col-10 form-group">
+                                <label for="email_admin_loger">Email</label>
+                                <input required class="form-control text-center" type="text" value="<?=$_SESSION['email_user']?>" id="email_commentaire_user" name="email_commentaire_user" >
+                            </div>
+                            <div class="col-2 form-group">
+                                <label for="Note">Note /5</label>
+                                <select required class="form-control text-center" type="number" id="note_commentaire_user" name="note_commentaire_user">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <label for="commentaire">Commentaire</label>
+                                <textarea required class="form-control" type="text" id="commentaire_user" name="commentaire_user" rows="6">Votre commentaire</textarea>
+                            </div>
+                            <button class="btn btn-success m-2" type="submit" value="Connexion" name="Connexion" >Publier le commentaire</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+
             <div class="text-center ">
-                <a class="btn btn-success btn-lg btn-block m-2" href="FormulaireReservationGite?ID=<?=$res["id_logement"]?>">Réserver ce gite</a>
                 <a class="btn btn-danger" href="index.php">Retour accueil</a>
             </div>
-
-            <?php
-            if (isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] === true) {
-                ?>
-                <a class="btn btn-waning" href="AjoutCommentaire.php?ID=<?=$ID?>">Ajouter un commentaire</a>
-                <?php
-            }else{
-                ?>
-                <p>ELELELELELSSSE</p>
-                <?php
-            }
-            ?>
-
-
         </div>
         <?php
     }

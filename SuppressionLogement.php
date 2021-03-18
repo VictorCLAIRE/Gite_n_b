@@ -1,4 +1,5 @@
 <?php
+session_start();
     ob_start();
     require "classes/Model_Gite.php";
     $gite = new ModelGite();

@@ -1,4 +1,5 @@
 <?php
+session_start();
 ob_start();
 require "classes/Connexion.php";
 $Connexion = new Connexion ();

@@ -1,4 +1,5 @@
 <?php
+session_start();
 ob_start();
 $title="Ajout d'un commentaire";
 require "classes/Model_Gite.php";
@@ -7,7 +8,7 @@ $gite = new ModelGite();
 $db = $gite->getPDO();
 $ID = $_GET['ID'];
 
-$gite->ShowLogementByIdDetails();
+$gite->FormulaireCommentaireById();
 ?>
 
 
