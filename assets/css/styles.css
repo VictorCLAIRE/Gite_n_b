@@ -54,6 +54,20 @@ body{
 .divLogementByIdTarif{
 
 }
+/******************************************* DIV ADD Logement **********************************/
+.DivFomAdd{
+    background-color: #79AEF2;
+    border: #2E83F2 solid 3px ;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.TitreFormAdd{
+    color: #0554F2;
+}
+.btnFormulaireAdd{
+
+}
+
 
 /******************************************** DIV COMMENTAIRE ***********************************/
 .divCom{

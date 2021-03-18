@@ -87,7 +87,9 @@ $gite = new ModelGite();
                     </div>
                 <!--<button type="submit" name="Modifier"> Modifier ce logement </button>-->
                 <input type="submit" name="Modifier" value="Modifier ce logement" class="btn btn-success">
-            </form>
+        </form>
+            <BR>
+            <a class="btn btn-warning m-2" href="admin.php"> Retour </a>
     </div>
 
     <?php

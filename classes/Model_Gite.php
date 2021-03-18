@@ -439,8 +439,11 @@ class ModelGite extends database{
         $requete_insertion->execute(array($type_logement, $intitule_logement, $description_logement, $photo_logement,$chambre_logement, $sdb_logement, $prix_logement, $emplacement_logement, $etat_logement, $option_logement, $departement_logement));
 
         if($requete_insertion){
-            echo "C cool";
-            //header("location:http://localhost/Projet_5_Gite/admin.php");
+        ?>
+                <script>
+                    alert('Votre logement : <?=$intitule_logement?> est ajouté ')
+                </script>
+        <?php
         }else{
             echo " remplir les champs";
         }
@@ -466,8 +469,12 @@ class ModelGite extends database{
         $requete_insertion=$reqUpdate->execute(array($ID));
 
         if($requete_insertion){
-            var_dump($departement_logement);
-            //header("location:http://localhost/Projet_5_Gite_new/admin.php");
+            ?>
+            <script>
+            alert('Votre logement : <?=$intitule_logement?> a bien été modifié ')
+            </script>
+            <?php
+
         }else{
             echo " remplir les champs";
         }
@@ -600,13 +607,12 @@ class ModelGite extends database{
 
     //Gestion upload image
     if(isset($_FILES['photo_logement'])){
-    $target_dir = 'assets/img/';
-    $img_gite = $target_dir . basename($_FILES['photo_logement']['name']);
-    $_POST['photo_logement'] = $img_gite;
+        $target_dir = 'assets/img/';
+        $img_gite = $target_dir . basename($_FILES['photo_logement']['name']);
+        $_POST['photo_logement'] = $img_gite;
 
         if(move_uploaded_file($_FILES['photo_logement']['tmp_name'], $img_gite)){
 
-        echo '<p class="alert-success">Le fichier est valide et à été téléchargé avec succès !</p>';
         }else{
             echo '<p class="alert-danger">Une erreur s\'est produite, le fichier n\'est pas valide !</p>';
         }
