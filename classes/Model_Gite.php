@@ -140,10 +140,12 @@ class ModelGite extends database{
             <div class="col-8 text-center formulaireResa">
                 <form class="cm-2" method="post" >
                     <div class="form-row">
-                         <div class="col form-group">
-                             <label for="nom">Nom</label>
-                             <input class="form-control" type="text" id="Nom_client" name="Nom_client">
-                         </div>
+
+                        <div class="col form-group">
+                            <label for="nom">Nom</label>
+                            <input class="form-control" type="text" id="Nom_client" name="Nom_client">
+                        </div>
+
                          <div class="col form-group">
                              <label for="prenom">Prénom</label>
                              <input class="form-control" type="text" id="Prenom_client" name="Prenom_client">
@@ -158,10 +160,25 @@ class ModelGite extends database{
                              <input class="form-control" type="date" id="Sortie_client" name="Sortie_client">
                          </div>
                     </div>
-                     <div class="form-group">
-                         <label for="email">email</label>
-                         <input class="form-control" type="email" id="Email_client" name="Email_client">
-                     </div>
+
+                    <?php
+                    if (isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] == true){
+                        ?>
+                        <div class="form-group">
+                            <label for="email">email</label>
+                            <input class="form-control" type="email" id="Email_client" name="Email_client" value="<?=$_SESSION['email_user']?>">
+                        </div>
+                        <?php
+                    }else{
+                        ?>
+                        <div class="form-group">
+                            <label for="email">email</label>
+                            <input class="form-control" type="email" id="Email_client" name="Email_client">
+                        </div>
+                        <?php
+                    }
+                    ?>
+
                      <div class="form-group">
                          <label for="Message">Message(facultatif)</label>
                          <textarea class="form-control" id="Message_client" name="Message_client"></textarea>
@@ -275,6 +292,86 @@ class ModelGite extends database{
 
 
         </div>
+        <?php
+    }
+
+    public function ShowLogementByIdDetailsConfirmResa(){
+
+        $db = $this->getPDO();
+        $req = $db->prepare("SELECT * FROM logement INNER JOIN clef_type_logement ON logement.type_logement = clef_type_logement.id_type_logement 
+                                                            INNER JOIN clef_dispo_logement ON logement.dispo_logement = clef_dispo_logement.id_dispo_logement
+                                                            INNER JOIN clef_option_logement ON logement.option_logement = clef_option_logement.id_option_logement
+                                                            INNER JOIN clef_departement_logement ON logement.departement_logement = clef_departement_logement.id_departement_logement
+                                                            WHERE id_logement = ?  ");
+        $ID=$_GET['id'];
+        $req->bindParam(1, $ID);
+        $req->execute();
+        $res=$req->fetch();
+        ?>
+
+        <!-- CARD -->
+
+        <div class="m-2">
+            <div class="divLogementById">
+                <h2 class="text-center"><?php echo $res['intitule_logement'] ?></h2>
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <div class="divLogementByIdImg">
+                            <img class="m-1" width="300" height="300" src="<?php echo $res['photo_logement'] ?>" alt="Card image cap">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="divLogementByIdDescription">
+                            <h6>Description:</h6>
+                            <p> <?php echo $res['description_logement'] ?></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="divLogementByIdInfo">
+                                    <h6> type de logement :</h6>
+                                    <p> <?php echo $res['choix_type_logement'] ?></p>
+                                </div>
+                                <div class="divLogementByIdInfo">
+                                    <h6>Localisation :</h6>
+                                    <p><?php echo $res['emplacement_logement'] ?></p>
+                                </div>
+
+                            </div>
+                            <div class="col-4">
+                                <div class="divLogementByIdInfo">
+                                    <h6>Option du logement :</h6>
+                                    <p><?php echo $res['choix_option_logement'] ?></p>
+                                </div>
+                                <div class="divLogementByIdInfo">
+                                    <h6>Département :</h6>
+                                    <p><?php echo $res['nom_departement_logement'] ?></p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="divLogementByIdInfo">
+                                    <h6>Nombre de chambre :</h6>
+                                    <p> <?php echo $res['chambre_logement'] ?></p>
+                                </div>
+                                <div class="divLogementByIdInfo">
+                                    <h6>Nombre de salle de bain:</h6>
+                                    <p> <?php echo $res['sdb_logement'] ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divLogementByIdTarif">
+                            <h6>Tarif :</h6>
+                            <p><?php echo $res['prix_logement'] ?>€/nuit</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class=" text-center m-2">
+                <a class="btn btn-danger" href="index.php">Retour accueil</a>
+            </div>
+        </div>
+
         <?php
     }
 

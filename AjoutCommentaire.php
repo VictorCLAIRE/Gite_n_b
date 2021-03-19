@@ -8,12 +8,16 @@ $gite = new ModelGite();
 $db = $gite->getPDO();
 $ID = $_GET['ID'];
 
-$gite->FormulaireCommentaireById();
+if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true){
+
+    $gite->FormulaireCommentaireById();
+}elseif(isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] == true){
+
+    $gite->FormulaireCommentaireById();
+}else{
+    header("location:http://localhost/Projet_5_Gite_new/FormulaireConnexion.php");
+}
 ?>
-
-
-
-
 
 <?php
 $content=ob_get_clean();

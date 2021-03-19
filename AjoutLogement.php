@@ -3,10 +3,12 @@ session_start();
 ob_start();
 require "classes/Model_Gite.php";
 $gite = new ModelGite();
-?>
-    <h1 class="text-center TitreFormAdd">Ajout d'un nouveau logement :</h1>
-    <div class="text-center DivFomAdd">
-        <form class="DivForm m-5" action="" method="post" enctype="multipart/form-data">
+
+    if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true){
+    ?>
+        <h1 class="text-center TitreFormAdd">Ajout d'un nouveau logement :</h1>
+        <div class="text-center DivFomAdd">
+            <form class="DivForm m-5" action="" method="post" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="col-6">
                         <div class="form-group">
@@ -95,19 +97,18 @@ $gite = new ModelGite();
                     </div>
                 </div>
                 <input type="submit" name="ajouter btnFormulaireAdd" value="Valider ce nouveau logement" class="btn btn-info m-2">
-        </form>
-    </div>
+            </form>
+        </div>
 
-<?php
+        <?php
+        if(isset($_POST['ajouter'])){
+            $gite->UploadImg();
+            $gite->addGite();
+        }
 
-    if(isset($_POST['ajouter'])){
-
-        $gite->UploadImg();
-        $gite->addGite();
+    }else{
+    header("location:http://localhost/Projet_5_Gite_new/FormulaireConnexion.php");
     }
-
-
-
 
 $content=ob_get_clean();
 //Rappel du template sur chaque page

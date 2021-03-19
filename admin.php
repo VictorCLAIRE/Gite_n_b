@@ -6,9 +6,8 @@ require "classes/Model_Gite.php";
 $gite= new ModelGite();
 
 
-    if ($_SESSION['connecter'] = true){
+    if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true){
     ?>
-
     <div class="container-fluid">
         <div class="container-fluid text-center">
         <h1>Gestion des logements :</h1>

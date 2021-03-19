@@ -54,7 +54,7 @@ try {
     $mail->Subject = "Validation de votre reservation du logement :" . $SujetClient;
     while ($datas= $req->fetch()){
         $ID = $_GET['ID'];
-        $url = "http://localhost/Projet_5_Gite/ConfirmationReservation.php?id=$ID";
+        $url = "http://localhost/Projet_5_Gite_new/ConfirmationReservation.php?id=$ID";
 
     $mail->Body    = '
  <!DOCTYPE html>
@@ -103,7 +103,7 @@ try {
 
             $mail->send();
 
-            header("http://localhost/Projet_5_Gite/ConfirmationReservation.php?id=$ID");
+            header("http://localhost/Projet_5_Gite_new/ConfirmationReservation.php?id=$ID");
         }catch (Exception $e){
     echo "<p class='alert-danger p-3'>Erreur lors de la tentative d'envoi de l'email {$mail->ErrorInfo}</p>";
     }
