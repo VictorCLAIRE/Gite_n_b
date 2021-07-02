@@ -10,7 +10,7 @@ class ModelGite extends database{
 
         foreach($req as $row){
             ?>
-            <div class="col-3 mt-2">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
                 <!-- CARD -->
                 <div class="card text-center cardAccueil">
                     <img class="d-block user-select-none imgCardAccueil" src="<?php echo $row['photo_logement'] ?>" alt="Card image cap">
@@ -102,7 +102,14 @@ class ModelGite extends database{
                     </div>
                 </div>
                 <form method="POST">
-                    <button class="btn btn-danger btn-lg btn-block" name="Supprimer">Valider la suppression</button>
+                <!--Bouton de démo avec PopUp-->       
+                <button onclick="myFunction()" class="btn btn-danger btn-lg btn-block" type="submit" >Valider la suppression</button>
+                        <script>
+                        function myFunction() {
+                        alert("Cette fonction n'est pas disponible sur la version de démo");
+                        }
+                        </script>
+                    <!--<button class="btn btn-danger btn-lg btn-block" name="Supprimer">Valider la suppression</button>-->
                 </form>
                     <?php
                     if (isset($_POST['Supprimer'])) {
@@ -186,7 +193,14 @@ class ModelGite extends database{
                      <div class="form-group">
                          <input class="form-control" type="hidden" value="<?php echo $res['intitule_logement'] ?>" name="Sujet">
                      </div>
-                     <button class="btn btn-primary btn-lg btn-block" type="submit" value="Reserver" name="validReservation" >Réserver</button>
+                     <!--Bouton de démo avec PopUp-->       
+                     <button onclick="myFunction()" class="btn btn-primary btn-lg btn-block" type="submit" >Réserver</button>
+                        <script>
+                        function myFunction() {
+                        alert("Cette fonction n'est pas disponible sur la version de démo");
+                        }
+                        </script>
+                     <!--<button class="btn btn-primary btn-lg btn-block" type="submit" value="Reserver" name="validReservation" >Réserver</button>-->
                  </form>
              </div>
         </div>
@@ -601,16 +615,16 @@ class ModelGite extends database{
         <div class="m-2">
             <form action="SearchLogement.php" method="post" >
                 <div class="form-row">
-                    <div class="col text-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg text-center">
                         <label for="type">Date d'arrivée</label>
                         <input class="form-control" type="date" id="search_arrivee" name="search_arrivee">
                     </div>
-                    <div class="col text-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg  text-center">
                         <label for="type">Date de départ</label>
                         <input class="form-control" type="date" id="search_depart" name="search_depart">
                     </div>
 
-                    <div class="col text-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg  text-center">
                         <label for="type">Type de logement</label>
                         <select class="form-control" type="text" id="search_type_logement" name="search_type_logement">
                             <option> </option>
@@ -619,7 +633,7 @@ class ModelGite extends database{
                             ?>
                         </select>
                     </div>
-                    <div class="col text-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg  text-center">
                         <label for="type">Option du logement</label>
                         <select class="form-control" type="text" id="search_type_logement" name="search_type_logement">
                             <option> </option>
@@ -628,7 +642,7 @@ class ModelGite extends database{
                             ?>
                         </select>
                     </div>
-                    <div class="col text-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg  text-center">
                         <label for="type">Nombre de chambre</label>
                         <select class="form-control" id="search_chambre" name="search_chambre">
                             <option value="1">1</option>

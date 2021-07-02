@@ -2,6 +2,7 @@
 session_start();
 ob_start();
 require "classes/Model_Gite.php";
+$title = "Fomulaire ajout logement";
 $gite = new ModelGite();
 
     if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true){
@@ -96,7 +97,15 @@ $gite = new ModelGite();
                         </div>
                     </div>
                 </div>
-                <input type="submit" name="ajouter btnFormulaireAdd" value="Valider ce nouveau logement" class="btn btn-info m-2">
+                <!--Bouton de démo avec PopUp-->       
+                <button onclick="myFunction()" class="btn btn-info m-2" type="submit" >Valider ce nouveau logement</button>
+                        <script>
+                        function myFunction() {
+                        alert("Cette fonction n'est pas disponible sur la version de démo");
+                        }
+                        </script>
+
+                <!--<input type="submit" name="ajouter btnFormulaireAdd" value="Valider ce nouveau logement" class="btn btn-info m-2">-->
             </form>
         </div>
 

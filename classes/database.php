@@ -8,7 +8,7 @@ class database
         //Essaie de te connecter
         try{
             //Stockage et instance de la classe PDO pour connecter php et mysql
-            $db = new PDO("mysql:host=localhost;dbname=projet_5_gite;charset=utf8", "root","");
+            $db = new PDO("mysql:host=lenigmevictor.mysql.db;dbname=lenigmevictor;charset=utf8", "lenigmevictor","12baseAIRBNB");
             //Fonction static de la classe PDO pour debug la connexion en cas d'erreur
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $db;

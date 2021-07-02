@@ -85,8 +85,14 @@ $gite = new ModelGite();
                             <img class="imgModifFormulaire" width="200" height="150" src="<?php echo $res['photo_logement'] ?>" alt="Card image cap">
                         </div>
                     </div>
-                <!--<button type="submit" name="Modifier"> Modifier ce logement </button>-->
-                <input type="submit" name="Modifier" value="Modifier ce logement" class="btn btn-success">
+                    <!--Bouton de démo avec PopUp-->       
+                <button onclick="myFunction()" class="btn btn-success" type="submit" >Modifier ce logement</button>
+                        <script>
+                        function myFunction() {
+                        alert("Cette fonction n'est pas disponible sur la version de démo");
+                        }
+                        </script>
+                <!--<input type="submit" name="Modifier" value="Modifier ce logement" class="btn btn-success">-->
         </form>
             <BR>
             <a class="btn btn-warning m-2" href="admin.php"> Retour </a>

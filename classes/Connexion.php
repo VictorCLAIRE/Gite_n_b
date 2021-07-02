@@ -50,7 +50,32 @@ class Connexion extends database{
                 </div>
                 <button class="btn btn-success" type="submit" value="Connexion" name="UserConnexion" >Connexion</button>
             </form>
+            <div class="m-2 text-center">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Login</th>
+                        <th scope="col">Mot de passe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-info">
+                        <td>MonsieurRelou@relouf.fr</td>
+                        <td>RelouForEver</td>
+                    </tr>
+                    <tr class="table-info">
+                        <td>MonsieurGentil@gentil.fr</td>
+                        <td>GentilForEver</td>
+                    </tr>
+                    <tr class="table-info">
+                        <td>MadameMitigée@mitigée.fr</td>
+                        <td>MitigéeForEver</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
             </div>
+            
             </div>
             <?php
 
@@ -87,7 +112,7 @@ class Connexion extends database{
                     $_SESSION['connecter_admin'] = true;
                     $_SESSION['email_admin_logement'] = $_POST['email_admin_loger'];
 
-                    header("location:http://localhost/Projet_5_Gite_new/Admin.php");
+                    header("location:https://victorclaire.com/Projets/AirNBN/admin.php");
                 } else {
                     echo "L'email ou le mdp n'est pas bon";
                 }
@@ -122,7 +147,7 @@ class Connexion extends database{
                 $_SESSION['connecter_user'] = true;
                 $_SESSION['email_user'] = $row['email_user'];
 
-                header("location:http://localhost/Projet_5_Gite_new/index.php");
+                header("location:https://victorclaire.com/Projets/AirNBN/index.php");
 
             } else {
                 echo "<div class='alert alert-danger m-2 text-center' role='alert'>L'email ou le mdp n'est pas bon</div>";
